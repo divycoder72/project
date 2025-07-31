@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FoodieHub - Order Delicious Food Online</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Header with Logo and Navigation -->
+    <header class="header">
+      <div class="container">
+        <div class="logo-section">
+          <img src="logo.png" alt="FoodieHub Logo" class="logo" />
+          <h1 class="brand-name">FoodieHub</h1>
+        </div>
+
+        <nav class="navigation">
+          <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <button class="cart-btn" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+          </button>
+          <button class="login-btn" onclick="toggleLogin()">
+            <i class="fas fa-user"></i>
+            Login
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Login to FoodieHub</h2>
+          <button class="close-btn" onclick="toggleLogin()">&times;</button>
+        </div>
+        <form class="login-form" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              required
+              placeholder="Enter your email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              required
+              placeholder="Enter your password"
+            />
+          </div>
+          <button type="submit" class="submit-btn">Login</button>
+          <p class="form-footer">
+            Don't have an account?
+            <a href="#" onclick="switchToSignup()">Sign up</a>
+          </p>
+        </form>
+
+        <!-- Signup Form (Hidden by default) -->
+        <form class="signup-form hidden" onsubmit="handleSignup(event)">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input
+              type="text"
+              id="fullName"
+              required
+              placeholder="Enter your full name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="signupEmail">Email</label>
+            <input
+              type="email"
+              id="signupEmail"
+              required
+              placeholder="Enter your email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="signupPassword">Password</label>
+            <input
+              type="password"
+              id="signupPassword"
+              required
+              placeholder="Create a password"
+            />
+          </div>
+          <button type="submit" class="submit-btn">Sign Up</button>
+          <p class="form-footer">
+            Already have an account?
+            <a href="#" onclick="switchToLogin()">Login</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+      <div class="cart-header">
+        <h3>Your Cart</h3>
+        <button class="close-btn" onclick="toggleCart()">&times;</button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <p class="empty-cart">Your cart is empty</p>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total">
+          <strong>Total: $<span id="cartTotal">0.00</span></strong>
+        </div>
+        <button class="checkout-btn">Proceed to Checkout</button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+      <!-- Hero Section -->
+      <section class="hero" id="home">
+        <div class="hero-content">
+          <h1>Delicious Food Delivered Fast</h1>
+          <p>Order your favorite meals from the best restaurants in town</p>
+          <button class="cta-btn">Order Now</button>
+        </div>
+      </section>
+
+      <!-- Menu Section -->
+      <section class="menu-section" id="menu">
+        <div class="container">
+          <h2 class="section-title">Our Menu</h2>
+          <div class="menu-grid">
+            <!-- Menu Item 1 -->
+            <div class="menu-item">
+              <img src="pizza.webp" alt="Pizza" />
+              <div class="item-info">
+                <h3>Margherita Pizza</h3>
+                <p>Fresh mozzarella, tomatoes, and basil</p>
+                <div class="item-footer">
+                  <span class="price">$12.99</span>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('Margherita Pizza', 12.99)"
+                  >
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Menu Item 2 -->
+            <div class="menu-item">
+              <img src="burger.webp" alt="Burger" />
+              <div class="item-info">
+                <h3>Classic Burger</h3>
+                <p>Beef patty, lettuce, tomato, cheese</p>
+                <div class="item-footer">
+                  <span class="price">$8.99</span>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('Classic Burger', 8.99)"
+                  >
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Menu Item 3 -->
+            <div class="menu-item">
+              <img src="pasta2.webp " alt="Pasta" />
+              <div class="item-info">
+                <h3>pasta</h3>
+                <p>Creamy pasta with tomato,chill and coriander</p>
+                <div class="item-footer">
+                  <span class="price">$14.99</span>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('Chicken Alfredo', 14.99)"
+                  >
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Menu Item 4 -->
+            <div class="menu-item">
+              <img src="dosa2.webp"" alt="dosa" />
+              <div class="item-info">
+                <h3>Dosa</h3>
+                <p>soft and spongy dosa stuffed with onions</p>
+                <div class="item-footer">
+                  <span class="price">$9.99</span>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('Caesar Salad', 9.99)"
+                  >
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Menu Item 5 -->
+            <div class="menu-item">
+              <img src="dhokla.webp" alt="dholka" />
+              <div class="item-info">
+                <h3>Dhokla</h3>
+                <p>perfect blend of sweet and spicy</p>
+                <div class="item-footer">
+                  <span class="price">$18.99</span>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('Sushi Platter', 18.99)"
+                  >
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Menu Item 6 -->
+            <div class="menu-item">
+              <img src="cake2.webp" alt="Dessert" />
+              <div class="item-info">
+                <h3>Chocolate Cake</h3>
+                <p>Rich chocolate cake with cream</p>
+                <div class="item-footer">
+                  <span class="price">$6.99</span>
+                  <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('Chocolate Cake', 6.99)"
+                  >
+                    <i class="fas fa-plus"></i> Add
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <div class="logo-section">
+              <img
+                src="logo.png"
+                alt="FoodieHub Logo"
+                class="footer-logo"
+                style="width: 60px; height: auto"
+              />
+              <h3>FoodieHub</h3>
+            </div>
+            <p>Delivering happiness, one meal at a time.</p>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="#menu">Menu</a></li>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h4>Contact Info</h4>
+            <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+            <p><i class="fas fa-envelope"></i> info@foodiehub.com</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
